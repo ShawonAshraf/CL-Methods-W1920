@@ -1,0 +1,73 @@
+
+
+numberOfSelectedSounds = numberOfSelected ("Sound")
+numberOfSelectedTextGrids = numberOfSelected ("TextGrid")
+
+if numberOfSelectedSounds != 1 or numberOfSelectedTextGrids != 1
+  exitScript: "Please select exactly one Sound and exactly one TextGrid!"
+endif
+
+sound = selected("Sound",1)
+textgrid = selected("TextGrid",1)
+
+# prompt user for phonemes to  measure
+form Get formants
+   natural Number_of_phoneme_tier 1
+endform
+
+# shorten tiernumber variable
+tier = number_of_phoneme_tier
+
+# clear info window
+writeInfoLine: "label time F1 F2 F3"
+
+# prepare plot 
+Erase all
+12
+Select outer viewport: 0, 6, 0, 4
+Draw inner box
+18
+Text top: "yes", "Formant plot"
+12
+Axes: 2900, 600, 800, 300
+14
+Text bottom: "yes", "F2"
+Text left: "yes", "F1"
+12
+Marks bottom every: 1, 500, "yes", "yes", "yes"
+Marks left every: 1, 100, "yes", "yes", "yes"
+
+
+# extract sounds around desired phones
+selectObject: sound
+duration = Get total duration
+
+formant = To Formant (burg): 0, 5, 5500, 0.025, 50
+ 
+selectObject: textgrid
+number = Get number of points: tier
+for i to number
+   time = Get time of point: tier, i
+   if time > 0.0125
+      start = time - 0.0125
+   else
+      start = 0
+   endif
+   if ( time + 0.0125 ) <= duration
+      end = time + 0.0125
+   else
+     end = duration
+   endif
+   label$ = Get label of point: tier, i
+   selectObject: formant
+   f1 = Get value at time: 1, time, "Hertz", "Linear"
+   f2 = Get value at time: 2, time, "Hertz", "Linear"
+   f3 = Get value at time: 3, time, "Hertz", "Linear"
+   appendInfoLine: label$, " ", fixed$(time,2), " ",fixed$( f1,0), " ", fixed$(f2,0), " ", fixed$(f3,0)
+   # plot this data point
+   Text: f2, "Centre", f1, "Half", label$
+   selectObject: textgrid
+endfor
+
+
+selectObject: sound, textgrid

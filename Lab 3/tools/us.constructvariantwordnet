@@ -1,0 +1,24 @@
+#!/bin/tcsh -f
+# delete stress markers for word alignment
+# insert spaces between phones
+# except for phones that consist of double letters
+# user-specific map to model names
+cat $1|\
+    tr -d '"[]' |\
+    sed 's/\(.\)/\1 /g' |\
+    sed 's/ _ //g' | sed 's/ :/:/g'| sed 's/\([^ ]*\) /eng_\1 /g' |\
+    $MODELMAP |\
+    sed 's/-//g' | tee /tmp/Aligner/AligngenericLastTranslit|\
+    paste -d\  $2 - |\
+    gawk 'BEGIN{print "([sil%_SIL_]"}\
+NF==1{next}\
+/extra_<[^>]*>/{gsub(/(extra_<#?)|>/,"");}\
+/^<[][)(|{}]/{$1="";print;next};\
+/^<#/{sub(/^<#/,"",$1);print ("WD_BEGIN%\\<#"$1"\\> "$1" WD_END%\\<#"$1"\\>");next}\
+/<@.*>/{gsub(/(^<@)|(>[\t ])/," ");print $1;next}\
+{gsub(/\[\]/,"");\
+ gsub(/</,"\\<");gsub(/>/,"\\>");\
+ gsub(/\[/,"\\[");gsub(/]/,"\\]");\
+ print "WD_BEGIN%"$0 "WD_END%"$1" [sil%_SIL_]"}\
+END{print"[sil%_SIL_])"}'|tr ' ' '\012'
+chmod go+rw /tmp/Aligner/AligngenericLastTranslit

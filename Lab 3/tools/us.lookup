@@ -1,0 +1,148 @@
+#!/bin/sh
+"true" ; exec /mount/resources/speech/festival/Festival_2.4/festival/bin/festival --script $0 $*
+
+;;; Because this is a --script type file I has to explicitly
+;;; load the initfiles: init.scm and user's .festivalrc
+(set! quiet t)
+(load (path-append libdir "init.scm"))
+(set! debug 4)
+(voice_cmu_us_ahw_cg)
+
+(if (set! festivaladdenda (getenv "FESTIVALADDENDA"))
+    (if (probe_file festivaladdenda)
+	(load festivaladdenda)))
+
+(define (find-trans utt)
+"Main function for processing TTS utterances.  Predicts POS and
+prints words with their POS"
+  (Token_POS utt)
+  (Token utt)
+  (POS utt)
+  (Phrasify utt)
+  (Word utt)
+;  (PostLex utt)
+)
+
+(define (output-trans utt)
+"Output the transcription for each token in utt"
+ (mapcar
+  (lambda (token)
+    (if (not (equal? 0 (item.feat token 'prespecified)))
+	(format t "%s, %s\n" (item.feat token 'prespecified) (item.feat  (item.daughtern token) 'pos))
+	(if (not (item.relation token 'Word))
+	    (begin 
+	      (mapcar
+	       (lambda (word)
+		 (mapcar
+		  (lambda (syl)
+		    (if (equal? 1 (item.feat syl 'stress)) 
+			(format t "[\"")
+			(format t "["))
+		    (format t "%s]" (sylname syl)))
+		  (item.daughters (item.relation word 'SylStructure))))
+	       (item.daughters token))
+	      (format t "\n" )))))
+  (utt.relation.items utt 'Token)))
+
+(define (sylname syl)
+  (list->string
+	  (mapcar
+	   (lambda (seg)
+	     (map_to_aligner (item.name seg)))
+	   (item.daughters (item.relation syl 'SylStructure)))))
+  
+(define (list->string l)
+  (if (equal? (car l) nil)
+      (set! str (quote ""))
+      (string-append (car l) (list->string (cdr l)))))
+
+(define (map_to_aligner seg)
+  "(map_to_aligner seg)
+   Maps some english and french phones to phonemes for which the Aligner has models."
+
+  (segment_map seg usfestival2enaligner_tab)
+)
+
+
+(define (segment_map seg mapping_tab)
+  "(segment_map seg mapping_tab)
+   Maps phones using mapping_tab."
+  (if (not mapping_tab)  ; tab not defined
+      seg
+      (let ((result (cdr (assoc seg mapping_tab))))
+	(if (not (null result))
+	    (if (not (atom result))
+		(list->string result)
+		result)
+	    seg))))
+
+
+(defvar usfestival2enaligner_tab nil
+  "usfestival2enaligner_tab nil
+   is an assoc list that defines the mapping from US Darpa Festival to Aligner SAMPA"
+)
+(set! usfestival2enaligner_tab
+      '(
+	;; insert your mappings here! ;;;;;;;
+       ;; 	("uh" . "V")
+("ae" . "\{")
+("ax" . "@")
+("axr" . "6")
+("er" . "3:")
+("aa" . "A:")
+("ao" . "Q")
+("ay" . "a_I")
+("aw" . "a_U")
+("b" . "b")
+("d" . "d")
+("dh" . "D")
+("jh" . "d_Z")
+("eh" . "e")
+("ey" . "e_I")
+("f" . "f")
+("g" . "g")
+("hh" . "h")
+("iy" . "i:")
+("ih" . "I")
+("y" . "j")
+("k" . "k")
+("l" . "l")
+("m" . "m")
+("n" . "n")
+("ng" . "N")
+("ao" . "O:")
+("oy" . "O_I")
+("p" . "p")
+("r" . "r")
+("s" . "s")
+("sh" . "S")
+("t" . "t")
+("th" . "T")
+("ch" . "t_S")
+("uw" . "u:")
+("uh" . "U")
+("ow" . "@_U")
+("v" . "v")
+("ah" . "V")
+("w" . "w")
+("z" . "z")
+("zh" . "Z")
+("dx" . "4")
+        ))
+
+
+
+
+;;;
+;;; Redefine what happens to utterances during text to speech 
+;;;
+(set! tts_hooks (list find-trans output-trans))
+
+;;; Stop those GC messages
+(gc-status nil)
+
+;;; Do the work
+(tts_file "-")
+
+
+

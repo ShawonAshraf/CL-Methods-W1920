@@ -1,0 +1,10 @@
+#!/bin/sh
+
+export ALANG=eng
+export ORTHOGRAPHICINPUT2WORDLIST=/mount/studenten/MethodsCL/2019/Speech/Lab3/tools/us.preprocess
+export WORDLIST2PHONEMES=/mount/studenten/MethodsCL/2019/Speech/Lab3/tools/us.lookup
+export DICTFILE=/mount/studenten/MethodsCL/2019/Speech/Lab3/tools/us.phones.dic
+export WORDNETCONSTRUCTION=/mount/studenten/MethodsCL/2019/Speech/Lab3/tools/us.constructvariantwordnet
+export MODELMAP=/mount/studenten/MethodsCL/2019/Speech/Lab3/tools/us.map
+
+Alignphones $*

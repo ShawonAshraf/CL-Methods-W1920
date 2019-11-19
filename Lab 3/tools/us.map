@@ -1,0 +1,11 @@
+#!/bin/sh
+# first insert space at line ends so all can be treated the same
+sed 's/$/ /;
+s/eng_{ /eng_\\{ /g;
+s/eng_3: /eng_3 /g;
+s/eng_A: /eng_Q /g;
+s/eng_i: /eng_i /g;
+s/eng_O: /eng_O /g;
+s/eng_u: /eng_u /g;
+s/ $//g'
+
