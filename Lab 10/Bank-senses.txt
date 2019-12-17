@@ -1,0 +1,19 @@
+bank#1	(sloping land (especially the slope beside a body of water)) "they pulled the canoe up on the bank"; "he sat on the bank of the river and watched the currents”.
+
+bank#2	depository financial institution, bank, banking concern, banking company (a financial institution that accepts deposits and channels the money into lending activities) "he cashed a check at the bank"; "that bank holds the mortgage on my home”.
+
+bank#3	(a long ridge or pile) "a huge bank of earth”.
+
+bank#4	(an arrangement of similar objects in a row or in tiers) "he operated a bank of switches”.
+
+bank#5	(a supply or stock held in reserve for future use (especially in emergencies)).
+
+bank#6	(the funds held by a gambling house or the dealer in some gambling games) "he tried to break the bank at Monte Carlo”.
+
+bank#7	cant, camber (a slope in the turn of a road or track; the outside is higher than the inside in order to reduce the effects of centrifugal force).
+
+bank#8	savings bank, coin bank, money box, bank (a container (usually with a slot in the top) for keeping money at home) "the coin bank was empty”.
+
+bank#9	bank building (a building in which the business of banking transacted) "the bank is on the corner of Nassau and Witherspoon”.
+
+bank#10	(a flight maneuver; aircraft tips laterally about its longitudinal axis (especially in turning)) "the plane went into a steep bank”.

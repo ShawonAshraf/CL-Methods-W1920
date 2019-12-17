@@ -1,0 +1,9 @@
+So to sum up the pipeline
+
+get senses from wordnet
+lemmatize senses
+lemmatize sentences or contexts
+
+compute dice coeff.
+
+run lesk - highest overlap
