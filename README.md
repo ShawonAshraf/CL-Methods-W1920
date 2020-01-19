@@ -1,4 +1,4 @@
-# CL Methods Lab Winter 19/20
+# CL Methods Winter 19/20
 
 > Universität Stuttgart
 > 
