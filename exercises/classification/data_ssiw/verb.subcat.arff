@@ -1,0 +1,57 @@
+@relation verb.subcat
+
+@attribute intrans	REAL
+@attribute trans	REAL
+@attribute ditrans	REAL
+@attribute pp-in	REAL
+@attribute pp-an	REAL
+@attribute pp-nach	REAL
+@attribute pp-mit	REAL
+@attribute refl	REAL
+@ATTRIBUTE class	{aspect,attitude,motion,perception,weather}
+
+@data
+
+%anfangen,aspect
+0.48,0.10,0.01,0.01,0,0,0.05,0,aspect
+%aufhören,aspect
+0.58,0.02,0,0,0.01,0,0.02,0.01,aspect
+%beginnen,aspect
+0.28,0.07,0.02,0.05,0.05,0.01,0.08,0.02,aspect
+%enden,aspect
+0.43,0.05,0.04,0.06,0.07,0.01,0.13,0,aspect
+%denken,attitude
+0.26,0.10,0.01,0.01,0.17,0,0,0.01,attitude
+%erinnern,attitude
+0.12,0.05,0.01,0.01,0.19,0,0,0.13,attitude
+%glauben,attitude
+0.09,0.08,0.02,0,0.08,0,0,0,attitude
+%wissen,attitude
+0.09,0.24,0.02,0,0,0,0,0,attitude
+%drehen,motion
+0.08,0.31,0.06,0.04,0.01,0,0,0.11,motion
+%fahren,motion
+0.34,0.19,0.04,0.05,0.01,0.04,0.03,0,motion
+%fliegen,motion
+0.38,0.19,0.03,0.08,0.02,0.02,0.01,0,motion
+%kriechen,motion
+0.46,0.06,0.03,0.07,0.02,0,0,0,motion
+%laufen,motion
+0.38,0.10,0.03,0.06,0.01,0.01,0,0,motion
+%rennen,motion
+0.54,0.04,0.02,0.06,0,0,0.01,0,motion
+%fühlen,perception
+0.38,0.10,0.03,0.06,0.01,0.01,0,0,perception
+%hören,perception
+0.15,0.43,0.04,0.03,0.01,0.01,0.01,0.01,perception
+%sehen,perception
+0.04,0.43,0.07,0.07,0.01,0,0.01,0,perception
+%blitzen,weather
+0.43,0.05,0.05,0.05,0.01,0,0.01,0,weather
+%donnern,weather
+0.47,0.09,0.06,0.01,0.01,0.01,0,0,weather
+%regnen,weather
+0.66,0.04,0.02,0.02,0,0,0,0,weather
+%schneien,weather
+0.67,0.04,0,0.03,0,0,0,0,weather
+
